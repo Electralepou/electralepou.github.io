@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Do NOT add images here. four grids below are filled automatically
+     from js/gallery-images.js. Just drop the file in its folder and add
+     one line to that list. See the comments in gallery-images.js.-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electra Satchel — Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ===== SHARED HEADER (repeat on every page) ===== -->
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="index.html">
+        Electra&nbsp;Satchel
+        <span class="site-subtitle">Digital Arts and Cinema</span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">About</a>
+        <a href="gallery.html" class="active" aria-current="page">Gallery</a>
+        <a href="lost-and-found.html">Lost&nbsp;and&nbsp;Found</a>
+        <a href="games.html">Games</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+    <div class="container">
+
+      <h1>Gallery</h1>
+      <p>A selection of work, grouped by kind. Click any piece to enlarge it.</p>
+
+      <!-- If JavaScript is off,the grids can't build.-->
+      <noscript>
+        <p class="gallery-empty">
+          The gallery needs JavaScript enabled to display the images.
+        </p>
+      </noscript>
+
+      <!-- the four categories. Each grid is filled by gallery.js using the
+           matching list in gallery-images.js. The data-category value HAS TO
+           match the folder name and the manifest key exactly!!!!!!! -->
+
+      <section class="gallery-category" data-category="portraits">
+        <h2>Portraits</h2>
+        <div class="gallery-grid"><!-- filled by gallery.js --></div>
+      </section>
+
+      <section class="gallery-category" data-category="charcoal">
+        <h2>Charcoal</h2>
+        <div class="gallery-grid"><!-- filled by gallery.js --></div>
+      </section>
+
+      <section class="gallery-category" data-category="digital">
+        <h2>Digital</h2>
+        <div class="gallery-grid"><!-- filled by gallery.js --></div>
+      </section>
+
+      <section class="gallery-category" data-category="misc">
+        <h2>Misc</h2>
+        <div class="gallery-grid"><!-- filled by gallery.js --></div>
+      </section>
+
+    </div>
+  </main>
+
+
+       <!--Lightbox Popups are Hidden by default; gallery.js shows it when a thumbnail is clicked. -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lb-close" aria-label="Close viewer">&times;</button>
+    <button class="lb-prev"  aria-label="Previous image">&#8249;</button>
+    <img id="lb-image" src="" alt="">
+    <button class="lb-next"  aria-label="Next image">&#8250;</button>
+    <div class="lb-counter" id="lb-counter"></div>
+  </div>
+
+
+  <footer class="site-footer">
+    <p>© 2026 — Electra Satchel, Alexandros Gavrilis</p>
+  </footer>
+
+  <!-- Load the image list FIRST,then the gallery logic that uses it. -->
+  <script src="js/gallery-images.js"></script>
+  <script src="js/gallery.js"></script>
+
+</body>
+</html>
