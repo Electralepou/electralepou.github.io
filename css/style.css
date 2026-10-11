@@ -1,0 +1,515 @@
+/* ==========================================================================
+   Electra Satchel — shared stylesheet
+   --------------------------------------------------------------------------
+   One file styles the whole site. It's organised top-to-bottom like this:
+
+     1. Variables ....... colours, fonts, spacing (retune the site from here)
+     2. Base ............ resets and page-wide defaults
+     3. Layout .......... the container that centres content
+     4. Header / nav .... the bar at the top of every page
+     5. Footer .......... the bar at the bottom of every page
+     6. Buttons & links . shared interactive bits
+     7. About page
+     8. Gallery + lightbox
+     9. Lost and Found page
+    10. Games page
+    11. Contact page
+    12. Small screens .. mobile tweaks live together at the bottom
+
+   Tip: almost all colour/tuning happens in section 1. Change a variable
+   there and it updates everywhere it's used.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABLES
+   ========================================================================== */
+:root {
+
+  /* ---- The palette, named. These are the raw colours from the brief. ---- */
+  --green:        #74AA82;   /* main green   */
+  --near-black:   #171D18;   /* main ink     */
+  --pale-yellow:  #E7F1BF;   /* main paper   */
+  --purple:       #B257D4;   /* accent / buttons */
+  --gold:         #A29143;
+  --deep-green:   #1E3E30;
+  --slate-blue:   #59739C;
+  --olive:        #718C38;
+  --mauve-grey:   #A69DAA;
+  --bright-green: #00E332;
+
+  /* ---- Roles. These point at the palette above. Re-point them to
+          re-theme the site without hunting through the whole file. ---- */
+  --bg:            var(--pale-yellow);  /* page background          */
+  --surface:       #F3F8DC;             /* cards, panels (a lighter paper) */
+  --ink:           var(--near-black);   /* body text                */
+  --ink-soft:      #3a463c;             /* muted text               */
+  --accent:        var(--green);        /* headings, rules, links   */
+  --accent-deep:   var(--deep-green);   /* darker green for the header */
+  --button:        var(--purple);       /* button / call-to-action  */
+  --button-ink:    #ffffff;             /* text on buttons          */
+  --button-hover:  #9a41bc;             /* button when hovered      */
+  --focus-ring:    var(--bright-green); /* keyboard focus outline   */
+
+  /* ---- Type. A warm serif for display, a clean sans for reading. ---- */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body:    system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* ---- Spacing & shape ---- */
+  --maxw:    980px;   /* content never grows wider than this */
+  --pad:     1.25rem; /* default breathing room              */
+  --radius:  14px;    /* rounded-corner amount               */
+  --shadow:  0 6px 20px rgba(23, 29, 24, 0.10);
+}
+
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  /* A faint warm gradient so the paper doesn't feel flat. */
+  background-image: linear-gradient(180deg, #EDF5CB 0%, var(--bg) 40%);
+  background-attachment: fixed;
+}
+
+img { max-width: 100%; display: block; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  color: var(--accent-deep);
+  line-height: 1.15;
+  font-weight: 600;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+a { color: var(--accent-deep); text-decoration-color: var(--accent); }
+a:hover { color: var(--button); }
+
+/* Visible focus outline for keyboard users (accessibility floor). */
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+
+/* ==========================================================================
+   3. LAYOUT
+   ========================================================================== */
+
+/* Centres content and gives it side padding. Wrap page content in this. */
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* Vertical rhythm for the main content area of each page. */
+main { padding: 2.5rem 0 3.5rem; }
+
+/* A soft card panel used in a few places. */
+.panel {
+  background: var(--surface);
+  border: 1px solid rgba(23, 29, 24, 0.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+}
+
+
+/* ==========================================================================
+   4. HEADER / NAV   (this block is repeated in every page's HTML)
+   ========================================================================== */
+
+.site-header {
+  background: var(--accent-deep);
+  color: var(--pale-yellow);
+  border-bottom: 3px solid var(--green);
+}
+
+/* Inner wrapper keeps header content aligned with page content. */
+.site-header .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* The name / logo (top left). */
+.site-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--pale-yellow);
+  text-decoration: none;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+}
+.site-title:hover { color: #fff; }
+.site-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-top: 2px;
+}
+
+/* The links (top right). */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.1rem;
+}
+.site-nav a {
+  color: var(--pale-yellow);
+  text-decoration: none;
+  padding: 0.25rem 0.1rem;
+  border-bottom: 2px solid transparent; /* underline grows on hover */
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.site-nav a:hover { color: #fff; border-bottom-color: var(--green); }
+
+/* The link for the page you're currently on. Add class="active" to it. */
+.site-nav a.active {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
+
+
+/* ==========================================================================
+   5. FOOTER   (also repeated in every page's HTML)
+   ========================================================================== */
+
+.site-footer {
+  background: var(--near-black);
+  color: var(--mauve-grey);
+  text-align: center;
+  padding: 1.5rem var(--pad);
+  font-size: 0.9rem;
+}
+.site-footer a { color: var(--green); }
+
+
+/* ==========================================================================
+   6. BUTTONS & SHARED LINKS
+   ========================================================================== */
+
+.button {
+  display: inline-block;
+  background: var(--button);
+  color: var(--button-ink);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  border: none;
+  border-radius: 999px;      /* pill shape — friendly, not corporate */
+  padding: 0.7rem 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+.button:hover { background: var(--button-hover); color: #fff; }
+.button:active { transform: translateY(1px); }
+
+/* A little hand-drawn-feeling divider. Use <hr class="squiggle"> if you like. */
+hr.squiggle {
+  border: none;
+  height: 10px;
+  margin: 2.5rem 0;
+  background: radial-gradient(circle at 6px -3px, transparent 8px, var(--green) 9px, transparent 10px);
+  background-size: 16px 16px;
+  opacity: 0.6;
+}
+
+
+/* ==========================================================================
+   7. ABOUT PAGE
+   ========================================================================== */
+
+/* Intro: portrait beside text, stacks on small screens. */
+.about-intro {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.about-portrait {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 6px solid #fff;      /* white "photo mat" edge */
+  transform: rotate(-1.5deg);  /* a touch wonky = handmade feel */
+}
+.about-bio p { margin: 0 0 1rem; }
+
+/* Links list under the bio. */
+.about-links { margin-top: 2.5rem; }
+.about-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.about-links a {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--green);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  text-decoration: none;
+  color: var(--accent-deep);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.about-links a:hover { background: var(--green); color: #fff; }
+
+
+/* ==========================================================================
+   8. GALLERY + LIGHTBOX
+   ========================================================================== */
+
+/* Each category heading. */
+.gallery-category { margin-top: 2.5rem; }
+.gallery-category:first-of-type { margin-top: 1rem; }
+.gallery-category > h2 {
+  border-bottom: 2px solid var(--green);
+  padding-bottom: 0.3rem;
+}
+
+/* The thumbnail grid. Auto-fills as many columns as fit. */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+/* One thumbnail (a button so it's keyboard-focusable). */
+.gallery-grid button {
+  padding: 0;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.12s ease;
+}
+.gallery-grid button:hover { transform: scale(1.03) rotate(0.5deg); }
+.gallery-grid img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Shown by the manifest script if a category has no images yet. */
+.gallery-empty { color: var(--ink-soft); font-style: italic; margin-top: 1rem; }
+
+/* ---- The lightbox overlay. Hidden until JS opens it. ---- */
+.lightbox {
+  position: fixed;
+  inset: 0;                       /* cover the whole screen */
+  background: rgba(23, 29, 24, 0.92);
+  display: none;                  /* JS switches this to flex */
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 1000;
+}
+.lightbox.open { display: flex; }
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+/* Lightbox controls (prev / next / close) share a look. */
+.lightbox button {
+  position: absolute;
+  background: rgba(231, 241, 191, 0.15);
+  color: var(--pale-yellow);
+  border: 1px solid rgba(231, 241, 191, 0.4);
+  border-radius: 999px;
+  width: 48px;
+  height: 48px;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.lightbox button:hover { background: var(--purple); border-color: var(--purple); }
+.lightbox .lb-prev  { left: 1.5rem;  top: 50%; transform: translateY(-50%); }
+.lightbox .lb-next  { right: 1.5rem; top: 50%; transform: translateY(-50%); }
+.lightbox .lb-close { top: 1.5rem;   right: 1.5rem; }
+
+/* The little "3 / 8" counter at the bottom. */
+.lightbox .lb-counter {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--pale-yellow);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+
+/* ==========================================================================
+   9. LOST AND FOUND PAGE
+   ========================================================================== */
+
+.lf-trailer {
+  background: var(--near-black);
+  color: var(--pale-yellow);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow);
+}
+.lf-trailer h1 { color: var(--green); }
+.lf-trailer p  { color: var(--pale-yellow); }
+
+/* Chapter list. Each row is a link. */
+.lf-chapters { margin-top: 2.5rem; }
+.lf-chapters ol {
+  list-style: none;
+  counter-reset: chapter;   /* we draw our own numbers */
+  padding: 0;
+  margin: 0;
+}
+.lf-chapters li { margin-bottom: 0.8rem; }
+.lf-chapters a {
+  counter-increment: chapter;
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  background: var(--surface);
+  border: 1px solid rgba(23,29,24,0.1);
+  border-left: 5px solid var(--green);
+  border-radius: 10px;
+  padding: 0.9rem 1.2rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-left-color 0.15s ease, transform 0.08s ease;
+}
+.lf-chapters a::before {
+  content: counter(chapter);          /* the chapter number */
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--green);
+  min-width: 1.4em;
+}
+.lf-chapters a:hover {
+  border-left-color: var(--purple);
+  transform: translateX(3px);
+}
+
+
+/* ==========================================================================
+   10. GAMES PAGE
+   ========================================================================== */
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* Each game is a card that is itself a link. */
+.game-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid rgba(23,29,24,0.1);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.4rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.12s ease, border-color 0.15s ease;
+  border-top: 5px solid var(--purple);
+}
+.game-card:hover { transform: translateY(-4px); border-top-color: var(--green); }
+.game-card h3 { color: var(--accent-deep); margin-bottom: 0.3rem; }
+.game-card p  { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
+.game-card .play-tag {
+  margin-top: auto;
+  padding-top: 1rem;
+  font-weight: 600;
+  color: var(--button);
+}
+
+
+/* ==========================================================================
+   11. CONTACT PAGE
+   ========================================================================== */
+
+.contact-form {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.contact-form label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid rgba(23,29,24,0.25);
+  border-radius: 10px;
+  padding: 0.7rem 0.85rem;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--green);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(116,170,130,0.35);
+}
+.contact-form textarea { resize: vertical; min-height: 140px; }
+
+
+/* ==========================================================================
+   12. SMALL SCREENS
+   ========================================================================== */
+
+@media (max-width: 640px) {
+
+  /* Stack the About intro (portrait on top). */
+  .about-intro { grid-template-columns: 1fr; }
+  .about-portrait { max-width: 240px; margin: 0 auto; }
+
+  /* Give the lightbox arrows a bit more room from the edges. */
+  .lightbox .lb-prev  { left: 0.5rem; }
+  .lightbox .lb-next  { right: 0.5rem; }
+}
+
+/* Respect people who prefer less motion. */
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; transition: none !important; }
+}
